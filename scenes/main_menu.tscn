@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b71nxp83hjglo"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_cbgqo"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_1bdig"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -9,7 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_cbgqo")
+script = ExtResource("1_1bdig")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -49,8 +49,9 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "Exit"
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
+[node name="SceneLabelContainer" type="CanvasLayer" parent="."]
+
+[node name="SceneLabel" type="Label" parent="SceneLabelContainer"]
 offset_top = 624.0
 offset_right = 275.0
 offset_bottom = 647.0

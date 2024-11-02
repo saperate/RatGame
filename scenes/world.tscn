@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://2vfr4ddt1fbo"]
+
+[ext_resource type="PackedScene" uid="uid://2ptowfit23xh" path="res://scenes/objects/player.tscn" id="1_s2j7w"]
+[ext_resource type="PackedScene" uid="uid://f2acbw2bcsqm" path="res://scenes/objects/platform.tscn" id="2_d5ry5"]
+
+[node name="world" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_s2j7w")]
+position = Vector2(576, 392)
+
+[node name="Platform" parent="." instance=ExtResource("2_d5ry5")]
+position = Vector2(576, 464)
+scale = Vector2(5, 1)
+
+[node name="Platform3" parent="." instance=ExtResource("2_d5ry5")]
+position = Vector2(1800, 464)
+scale = Vector2(7.44874, 1)
+
+[node name="Platform2" parent="." instance=ExtResource("2_d5ry5")]
+position = Vector2(1152, 560)
+scale = Vector2(2.72924, 1)
+
+[node name="SceneLabelContainer" type="CanvasLayer" parent="."]
+
+[node name="SceneLabel" type="Label" parent="SceneLabelContainer"]
+offset_top = 624.0
+offset_right = 275.0
+offset_bottom = 647.0
+text = "In scene: world"
+vertical_alignment = 1
