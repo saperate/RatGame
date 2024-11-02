@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://2vfr4ddt1fbo"]
+
+[node name="world" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_top = 624.0
+offset_right = 275.0
+offset_bottom = 647.0
+text = "In scene: world"
+vertical_alignment = 1
