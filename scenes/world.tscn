@@ -1,12 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://2vfr4ddt1fbo"]
+[gd_scene load_steps=3 format=3 uid="uid://2vfr4ddt1fbo"]
 
-[ext_resource type="Script" path="res://scripts/world.gd" id="1_mddsr"]
 [ext_resource type="PackedScene" uid="uid://2ptowfit23xh" path="res://scenes/objects/player.tscn" id="1_s2j7w"]
 [ext_resource type="PackedScene" uid="uid://f2acbw2bcsqm" path="res://scenes/objects/platform.tscn" id="2_d5ry5"]
-[ext_resource type="PackedScene" uid="uid://b3jh85dr01hg0" path="res://scenes/pause_menu.tscn" id="4_hseuk"]
 
 [node name="world" type="Node2D"]
-script = ExtResource("1_mddsr")
 
 [node name="Player" parent="." instance=ExtResource("1_s2j7w")]
 position = Vector2(576, 392)
@@ -25,15 +22,9 @@ scale = Vector2(2.72924, 1)
 
 [node name="SceneLabelContainer" type="CanvasLayer" parent="."]
 
-[node name="PauseMenu" parent="SceneLabelContainer" instance=ExtResource("4_hseuk")]
-visible = false
-
 [node name="SceneLabel" type="Label" parent="SceneLabelContainer"]
 offset_top = 624.0
 offset_right = 275.0
 offset_bottom = 647.0
 text = "In scene: world"
 vertical_alignment = 1
-
-[connection signal="on_continue" from="SceneLabelContainer/PauseMenu" to="." method="_on_pause_menu_continue"]
-[connection signal="on_restart" from="SceneLabelContainer/PauseMenu" to="." method="_on_pause_menu_restart"]
