@@ -9,7 +9,7 @@ const JUMP_VELOCITY = -500.0
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-func _process(delta):
+func _process(_delta):
 	##for some reason up is down with godot.
 	##this places the player back at the start if they fall off.
 	if(position.y >= FALL_LIMIT):

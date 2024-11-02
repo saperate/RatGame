@@ -52,11 +52,17 @@ text = "Exit"
 [node name="SceneLabelContainer" type="CanvasLayer" parent="."]
 
 [node name="SceneLabel" type="Label" parent="SceneLabelContainer"]
-offset_top = 624.0
-offset_right = 275.0
-offset_bottom = 647.0
+anchors_preset = -1
+anchor_top = 0.963
+anchor_right = 0.239
+anchor_bottom = 0.998
+offset_top = -0.0240479
+offset_right = -0.328003
+offset_bottom = 0.295959
+size_flags_horizontal = 4
 text = "In scene: main menu"
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="VBoxContainer/StartContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExitContainer/ExitButton" to="." method="_on_exit_button_pressed"]

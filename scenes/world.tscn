@@ -23,8 +23,12 @@ scale = Vector2(2.72924, 1)
 [node name="SceneLabelContainer" type="CanvasLayer" parent="."]
 
 [node name="SceneLabel" type="Label" parent="SceneLabelContainer"]
-offset_top = 624.0
-offset_right = 275.0
-offset_bottom = 647.0
+anchors_preset = -1
+anchor_top = 0.963
+anchor_right = 0.239
+anchor_bottom = 0.998
+offset_top = -0.0240479
+offset_right = -0.328003
+offset_bottom = 0.295959
 text = "In scene: world"
 vertical_alignment = 1

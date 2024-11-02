@@ -7,7 +7,7 @@ func _ready():
 func _on_continue_button_pressed():
 	unpause()
 
-#Sends the restart signal and the continue signal to unpause the game
+#Sends the restart signal and unpauses the game
 func _on_restart_button_pressed():
 	unpause()
 	get_tree().reload_current_scene()
