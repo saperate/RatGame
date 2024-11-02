@@ -1,5 +1,10 @@
 extends CanvasLayer
 
+##Dictates what scenes should not be able to use the pause menu
+@export var excluded_scenes = [
+	"MainMenu"
+]
+
 func _ready():
 	visible = false
 
@@ -20,7 +25,7 @@ func _physics_process(delta):
 	# NOTE
 	# since autoload scripts can be referenced by all scripts in a scene.
 	# potentially change it so we just call toggle() instead of checking for inputs here.
-	if Input.is_action_just_pressed("pause_menu"):
+	if Input.is_action_just_pressed("pause_menu") && !excluded_scenes.has(get_tree().current_scene.name):
 		toggle()
 
 func toggle():
