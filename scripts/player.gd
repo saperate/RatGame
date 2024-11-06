@@ -3,6 +3,8 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -500.0
 
+@onready var _animated_sprite = $AnimatedSprite2D
+
 ##How far can we go down before we are considered out of stage
 ## and need to reset the player back to the start [in pixels]
 @export var FALL_LIMIT = 2000
@@ -31,8 +33,12 @@ func _physics_process(delta):
 
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = direction * SPEED;
+		#Temporary, we'll change this stuff to a state machine
+		_animated_sprite.play("run")
+		_animated_sprite.flip_h = true if direction == -1 else false
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		_animated_sprite.play("idle")
 
 	move_and_slide()
