@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const SPEED = 300.0
+const MAX_SPEED = 300.0
 const JUMP_VELOCITY = -500.0
 
 @onready var _animated_sprite = $AnimatedSprite2D
@@ -33,12 +34,37 @@ func _physics_process(delta):
 
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
-		velocity.x = direction * SPEED;
+		velocity.x = clamp(velocity.x + direction * SPEED, -MAX_SPEED, MAX_SPEED) * calc_speed_modifier();
 		#Temporary, we'll change this stuff to a state machine
 		_animated_sprite.play("run")
 		_animated_sprite.flip_h = true if direction == -1 else false
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x += velocity.x * (calc_friction_modifier(1) - 1);
 		_animated_sprite.play("idle")
 
 	move_and_slide()
+
+# This is called AFTER we clamp the speed
+func calc_speed_modifier():
+	var speed_modifer = 1;
+	
+	if(Input.is_action_pressed("shift")):
+		speed_modifer *= 1.5;
+	
+	#we could have smth here for a slowness modifier (ex: in a swamp)
+	#could possibly use the friction value, but it would need tweaking
+
+	return speed_modifer;
+
+func calc_friction_modifier(speed_modifer: float):
+	if(get_slide_collision_count() > 0):
+		var friction_modifier = 0;
+		# doubt we'll ever get more than 1, but just in case
+		for i in get_slide_collision_count():
+			var collision = get_slide_collision(0);
+			if(collision != null and collision.get_collider().has_method("get_friction")):
+				friction_modifier += collision.get_collider().get_friction();
+				if(collision.get_collider().get_friction() == 0):
+					print("ice");
+		speed_modifer -= speed_modifer * friction_modifier / get_slide_collision_count();
+	return speed_modifer;

@@ -19,6 +19,7 @@ scale = Vector2(7.44874, 1)
 [node name="Platform2" parent="." instance=ExtResource("2_d5ry5")]
 position = Vector2(1152, 560)
 scale = Vector2(2.72924, 1)
+type = "ICE"
 
 [node name="SceneLabelContainer" type="CanvasLayer" parent="."]
 
