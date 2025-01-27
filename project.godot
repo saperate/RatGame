@@ -20,6 +20,16 @@ config/icon="res://resources/sprites/icon.svg"
 
 PauseMenu="*res://scenes/pause_menu.tscn"
 
+[editor]
+
+script/templates_search_path="res://resources/script templates"
+
+[file_customization]
+
+folder_colors={
+"res://addons/": "gray"
+}
+
 [input]
 
 move_left={
