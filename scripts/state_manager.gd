@@ -13,7 +13,6 @@ func _ready():
 			states[child.name.to_lower()] = child
 			child.state_parent = state_parent
 			child.Transitioned.connect(on_child_transition)
-			state_parent.DirectionUpdate.connect(child.get_direction)
 	
 	if initial_state:
 		initial_state.enter()
@@ -27,7 +26,6 @@ func _process(delta):
 func _physics_process(delta):
 	if current_state:
 		current_state.physics_update(delta)
-		state_parent.velocity = current_state.velocity
 
 
 func on_child_transition(state, new_state_name):
