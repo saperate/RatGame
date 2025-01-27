@@ -21,30 +21,48 @@ func _process(_delta):
 
 #Handles everything for player physics
 func _physics_process(delta):
+	var direction = Input.get_axis("move_left", "move_right")
 	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	if Input.is_action_just_pressed("jump"):
+		if is_on_floor():
+			velocity.y = JUMP_VELOCITY;
+		# Rudimentary wall jumping that only works when the platform
+		# is on the left of the player. TODO generalise this for all walls
+		# could probably get the direction we want by substracting our pos
+		# with the wall's 
+		# TODO possibly make a check that a wall is jumpable too
+		elif is_on_wall_only():
+			if(direction == 1):
+				velocity.y = JUMP_VELOCITY * 1.25;
+				velocity.x = SPEED ;
+				position.x += 50;
+			else:
+				position.x += 10
+	elif is_on_wall_only():
+		velocity.y = 0;
+		_animated_sprite.play("idle");
+		return;
+	
 
-
-	var direction = Input.get_axis("move_left", "move_right")
+	
 	if direction:
 		var modded_max_speed = calc_max_speed();
 		velocity.x = clamp(
 			velocity.x + direction * SPEED * (calc_speed_modifier()), 
 			-modded_max_speed, modded_max_speed
-			);
+		);
 		#Temporary, we'll change this stuff to a state machine
 		_animated_sprite.play("run")
 		_animated_sprite.flip_h = true if direction == -1 else false
 	else:
 		velocity.x += velocity.x * (calc_friction_modifier(1) - 1);
 		_animated_sprite.play("idle")
-
+	
 	move_and_slide()
 
 
@@ -75,7 +93,9 @@ func calc_friction_modifier(speed_modifer: float):
 		var collision = get_slide_collision(0);
 		if(collision != null and collision.get_collider().has_method("get_friction")):
 			speed_modifer -= speed_modifer * collision.get_collider().get_friction();
-	return speed_modifer;
+		return speed_modifer;
+	else : # remove this if you want to not be able to move in the air
+		return 0;
 
 func calc_step_modifier(step: bool):
 	if(get_slide_collision_count() > 0):
