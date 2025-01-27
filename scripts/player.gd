@@ -34,7 +34,11 @@ func _physics_process(delta):
 
 	var direction = Input.get_axis("move_left", "move_right")
 	if direction:
-		velocity.x = clamp(velocity.x + direction * SPEED, -MAX_SPEED, MAX_SPEED) * calc_speed_modifier();
+		var modded_max_speed = calc_max_speed();
+		velocity.x = clamp(
+			velocity.x + direction * SPEED * (calc_speed_modifier()), 
+			-modded_max_speed, modded_max_speed
+			);
 		#Temporary, we'll change this stuff to a state machine
 		_animated_sprite.play("run")
 		_animated_sprite.flip_h = true if direction == -1 else false
@@ -44,16 +48,22 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-# This is called AFTER we clamp the speed
-func calc_speed_modifier():
+
+func calc_max_speed():
 	var speed_modifer = 1;
 	
 	if(Input.is_action_pressed("shift")):
 		speed_modifer *= 1.5;
 	
-	#we could have smth here for a slowness modifier (ex: in a swamp)
-	#could possibly use the friction value, but it would need tweaking
+	return MAX_SPEED * speed_modifer;
 
+
+func calc_speed_modifier():
+	var speed_modifer = 1;
+	
+	speed_modifer = 1 - calc_friction_modifier(1);
+	print(speed_modifer)
+	
 	return speed_modifer;
 
 func calc_friction_modifier(speed_modifer: float):
@@ -64,7 +74,5 @@ func calc_friction_modifier(speed_modifer: float):
 			var collision = get_slide_collision(0);
 			if(collision != null and collision.get_collider().has_method("get_friction")):
 				friction_modifier += collision.get_collider().get_friction();
-				if(collision.get_collider().get_friction() == 0):
-					print("ice");
 		speed_modifer -= speed_modifer * friction_modifier / get_slide_collision_count();
 	return speed_modifer;

@@ -5,14 +5,14 @@ extends Node
 
 var types_dict = {
 	"GRASS": {
-		"friction": .75, # 1 means friction equal to the movement, < 1 = less
+		"friction": .8, # 1 means friction equal to the movement, < 1 = less
 		"rect": Rect2( # Coordinates for the texture
 			16.193,0, # X and Y
 			31.863,10.156 # Width and Height
 		)
 	},
 	"ICE": {
-		"friction": 0.1,
+		"friction": 0.025,
 		"rect": Rect2(
 			16.193,48.123,
 			31.863,10.156
