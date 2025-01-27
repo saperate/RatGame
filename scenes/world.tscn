@@ -15,6 +15,7 @@ scale = Vector2(5, 1)
 [node name="Platform3" parent="." instance=ExtResource("2_d5ry5")]
 position = Vector2(1800, 464)
 scale = Vector2(7.44874, 1)
+type = "SAND"
 
 [node name="Platform2" parent="." instance=ExtResource("2_d5ry5")]
 position = Vector2(1152, 560)

@@ -22,7 +22,6 @@ func _process(_delta):
 #Handles everything for player physics
 func _physics_process(delta):
 	
-	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -49,11 +48,17 @@ func _physics_process(delta):
 	move_and_slide()
 
 
+##TODO move all this into the platform script so we can use it with other entities
 func calc_max_speed():
 	var speed_modifer = 1;
 	
 	if(Input.is_action_pressed("shift")):
 		speed_modifer *= 1.5;
+	
+	if((Time.get_ticks_msec()/250) % 2 == 0):#simulates steps from the player
+		speed_modifer *= calc_step_modifier(false);#pause
+	else:
+		speed_modifer *= calc_step_modifier(true);#step
 	
 	return MAX_SPEED * speed_modifer;
 
@@ -62,17 +67,19 @@ func calc_speed_modifier():
 	var speed_modifer = 1;
 	
 	speed_modifer = 1 - calc_friction_modifier(1);
-	print(speed_modifer)
 	
 	return speed_modifer;
 
 func calc_friction_modifier(speed_modifer: float):
 	if(get_slide_collision_count() > 0):
-		var friction_modifier = 0;
-		# doubt we'll ever get more than 1, but just in case
-		for i in get_slide_collision_count():
-			var collision = get_slide_collision(0);
-			if(collision != null and collision.get_collider().has_method("get_friction")):
-				friction_modifier += collision.get_collider().get_friction();
-		speed_modifer -= speed_modifer * friction_modifier / get_slide_collision_count();
+		var collision = get_slide_collision(0);
+		if(collision != null and collision.get_collider().has_method("get_friction")):
+			speed_modifer -= speed_modifer * collision.get_collider().get_friction();
 	return speed_modifer;
+
+func calc_step_modifier(step: bool):
+	if(get_slide_collision_count() > 0):
+		var collision = get_slide_collision(0);
+		if(collision != null and collision.get_collider().has_method("get_step_modifier")):
+			return collision.get_collider().get_step_modifier(step)
+	return 1;
