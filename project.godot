@@ -29,7 +29,6 @@ script/templates_search_path="res://resources/script templates"
 folder_colors={
 "res://addons/": "gray"
 }
-
 [input]
 
 move_left={
